@@ -28,19 +28,21 @@ public class Fetcher {
 
 	public Item getValueOfDay() {
 		Item item = new Item();
-		item.image = "http://i.walmartimages.com/i/p/00/88/59/09/46/0088590946960_Color_Black_SW_300X300.jpg";
+		item.image = "http://i.walmartimages.com/i/p/00/88/59/09/46/0088590946960_Color_Black_SW_500X500.jpg";
 		item.title = "Apple iPad 2 16GB Wi-Fi ( Black or White )";
 		item.price = "134.56$";
 		item.desc = "The all-new thinner and lighter design makes the Apple iPad 2, 16GB with Wi-Fi even more comfortable to hold. It's even more powerful with the dual-core A5 chip, yet has the same 10 hours of battery life. With two cameras, you can make FaceTime video calls, record HD video, and put a twist on your snapshots in Photo Booth.";
+		item.desc = item.desc.replace(".", ".\n");
 		return item;
 	}
 	
 	public Item getValueOfHour() {
 		Item item = new Item();
-		item.image = "http://i.walmartimages.com/i/p/11/13/04/98/62/1113049862667_300X300.jpg";
+		item.image = "http://i.walmartimages.com/i/p/11/13/04/98/62/1113049862667_500X500.jpg";
 		item.title = "Premier Mounts LPTM5080 Tilt Wall Mount for 50 - 80 Displays BONUS 15' HDMI Cable, Bundle";
 		item.price = "567.21$";
 		item.desc = "The Premier Mounts Tilt Wall Mount (LPTM5080) fits most 50-to-80-inch flat-panel displays and can support up to 300 pounds. This low-profile tilt mount for 50&quot; - 80&quot; displays is designed to hold a display 2 inches from a wall. Featuring eight degrees of continuous tilt, this flat-panel tilt mount has a rigid steel construction and universal-mounting brackets. The open design of the Premier Mounts Tilt Wall Mount (LPTM5080) features cable and electrical access holes for easy use and organization in almost any space. Multiple-stud mounting points for easy mounting are provided on this flat-panel tilt wall mount, making it stable and easy to use. There is also built-in lateral shift for fine tuning to allow simple adjustments. The safety locking screws can also be used for fine tuning. This Premier Mounts Tilt Wall Mount (LPTM5080) also includes patent-pending universal spacers.";
+		item.desc = item.desc.replace(".", ".\n");
 		return item;		
 	}
 	

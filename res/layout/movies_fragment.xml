@@ -7,6 +7,19 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
+   <LinearLayout android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_corner"
+        android:layout_gravity="center"
+        android:layout_centerInParent="true">        
+   		<TextView android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="TITLE"
+            android:typeface="serif"
+            android:gravity="center"
+            android:padding="5dp"/>         
+    </LinearLayout>      
+    
     <TextView
 	    android:id="@+id/title"
 	    android:layout_width="fill_parent"
@@ -27,6 +40,18 @@
         android:contentDescription="@string/banner_alt"
         android:src="@drawable/item_300" />
 
+   <LinearLayout android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_corner"
+        android:layout_gravity="center"
+        android:layout_centerInParent="true">        
+   		<TextView android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="PRICE"
+            android:typeface="serif"
+            android:gravity="center"
+            android:padding="5dp"/>         
+    </LinearLayout>      
 
    <TextView
        android:id="@+id/price"
@@ -39,6 +64,19 @@
        android:text="Price"
        android:textColor="#0000CC" />
 
+   <LinearLayout android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_corner"
+        android:layout_gravity="center"
+        android:layout_centerInParent="true">        
+   		<TextView android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="DESCRIPTION"
+            android:typeface="serif"
+            android:gravity="center"
+            android:padding="5dp"/>         
+   </LinearLayout>      
+   
    <TextView
        android:id="@+id/desc"
        android:layout_width="fill_parent"
@@ -47,8 +85,7 @@
        android:layout_below="@+id/title"
        android:layout_marginTop="29dp"            
        android:gravity="center"
-       android:text="Description of the item can be found here. Design Movies Screen"
-       android:textColor="#FF8000"
+       android:text="Description of the item can be found here. Design Movies Screen"       
        android:textSize="20dp" />
 
    <ImageButton

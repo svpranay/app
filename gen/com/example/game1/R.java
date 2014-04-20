@@ -986,6 +986,7 @@ containing a value of this type.
         public static final int item1=0x7f020059;
         public static final int item2=0x7f02005a;
         public static final int item_300=0x7f02005b;
+        public static final int rounded_corner=0x7f02005c;
     }
     public static final class id {
         public static final int action_bar=0x7f05001c;
