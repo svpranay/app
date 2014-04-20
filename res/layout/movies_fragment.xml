@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent" android:layout_height="fill_parent">
+
+<LinearLayout 
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+	    android:id="@+id/title"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"	 
+	    android:layout_marginTop="20sp"
+	    android:gravity="center"
+	    android:textStyle="bold"
+	    android:typeface="monospace"
+	    android:text="Title: Design Movies Screen"
+	    android:textColor="#547C0E" />
+	 
+    <ImageView
+        android:id="@+id/productimage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title"
+        android:gravity="center"
+        android:contentDescription="@string/banner_alt"
+        android:src="@drawable/item_300" />
+
+
+   <TextView
+       android:id="@+id/price"
+       style="@dimen/activity_horizontal_margin"
+       android:layout_width="fill_parent"
+       android:layout_height="wrap_content"      
+       android:layout_below="@+id/productimage"
+       android:layout_marginTop="14dp"            
+       android:gravity="center"
+       android:text="Price"
+       android:textColor="#0000CC" />
+
+   <TextView
+       android:id="@+id/desc"
+       android:layout_width="fill_parent"
+       android:layout_height="wrap_content"
+       android:layout_alignParentLeft="true"
+       android:layout_below="@+id/title"
+       android:layout_marginTop="29dp"            
+       android:gravity="center"
+       android:text="Description of the item can be found here. Design Movies Screen"
+       android:textColor="#FF8000"
+       android:textSize="20dp" />
+
+   <ImageButton
+       android:id="@+id/buynow"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_below="@+id/desc"
+       android:layout_gravity="center"
+       android:background="#ffffff"
+       android:gravity="center"
+       android:src="@drawable/buy_now_blue" />
+
+</LinearLayout>
+</ScrollView>
