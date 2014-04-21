@@ -18,12 +18,37 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.xml.sax.XMLReader;
 
 import android.os.AsyncTask;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 public class Fetcher {
+	String baseUrl = "http://api.affil.walmart.com";
+	String vohUrl = baseUrl + "/voh";
+	String vodUrl = baseUrl + "/vod";
 	
-	public Fetcher() {
-		 //new RequestTask().execute("http://api.affil.walmart.com/voh");
-		 //new RequestTask().execute("http://api.affil.walmart.com/voh");
+	public void setItemForUI(View view, String type) {
+		RequestTask rt = new RequestTask();
+		rt.setViewToUpdate(view);
+
+		if (type == "vod") {
+			rt.execute(vodUrl);
+		} else {
+			rt.execute(vohUrl);
+		}
+	}
+	
+	private void setItem(Item item, View rootView) {
+		TextView tv = (TextView) rootView.findViewById(R.id.price);
+        tv.setText(item.price);
+        tv = (TextView) rootView.findViewById(R.id.desc);
+        tv.setText(item.desc);
+        tv = (TextView) rootView.findViewById(R.id.title);
+        tv.setText(item.title);
+        
+        ImageView iv = (ImageView) rootView.findViewById(R.id.productimage);
+        ImageDownloader mDownload = new ImageDownloader();
+        mDownload.download(item.image, iv);
 	}
 
 	public Item getValueOfDay() {
@@ -46,7 +71,13 @@ public class Fetcher {
 		return item;		
 	}
 	
-	class RequestTask extends AsyncTask<String, String, String>{
+	class RequestTask extends AsyncTask<String, Void, String>{
+		
+		View view;
+		
+		public void setViewToUpdate(View view) {
+			this.view = view; 
+		}
 
 	    protected String doInBackground(String... uri) {
 	    	HttpClient httpclient = new DefaultHttpClient();
@@ -73,5 +104,15 @@ public class Fetcher {
 	        System.out.println(responseString);
 	        return responseString;
 	    }	    
+	    
+	    protected void onPostExecute(String response) {
+	    	Item item = getItemFromString(response);
+	    	setItem(item, view);
+	    }
+	    
+		public Item getItemFromString(String response) {
+			return null;
+		}
 	}
+	
 }

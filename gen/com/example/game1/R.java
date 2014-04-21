@@ -1157,6 +1157,7 @@ containing a value of this type.
         public static final int app_name=0x7f0a000d;
         public static final int banner_alt=0x7f0a0010;
         public static final int hello_world=0x7f0a000e;
+        public static final int service_name=0x7f0a0011;
     }
     public static final class style {
         /** 

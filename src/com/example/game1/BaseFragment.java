@@ -17,33 +17,25 @@ public class BaseFragment extends Fragment {
 	public String type;
 	Fetcher fetcher = new Fetcher();
 	
-	public Item getItemForType() {
+	public void setItemForUI(View rootView) {
+		Item item ;
 		if (type == "vod") {
-			return fetcher.getValueOfDay();
+			item = fetcher.getValueOfDay();
 		} else {
-			return fetcher.getValueOfHour();
+			item = fetcher.getValueOfHour();
 		}
+	    setItem(item, rootView);
 	}
+	
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {    	
-    	Item item = getItemForType();
+    	
         View rootView = inflater.inflate(R.layout.movies_fragment, container, false);
         
-        
-        TextView tv = (TextView) rootView.findViewById(R.id.price);
-        tv.setText(item.price);
-        tv = (TextView) rootView.findViewById(R.id.desc);
-        tv.setText(item.desc);
-        tv = (TextView) rootView.findViewById(R.id.title);
-        tv.setText(item.title);
-        
-        ImageView iv = (ImageView) rootView.findViewById(R.id.productimage);
-        ImageDownloader mDownload = new ImageDownloader();
-        mDownload.download(item.image, iv);
+        setItemForUI(rootView);    
         
         ImageButton button = (ImageButton) rootView.findViewById(R.id.buynow);
-
 		button.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -57,6 +49,20 @@ public class BaseFragment extends Fragment {
 	
         return rootView;
     }
+	
+	private void setItem(Item item, View rootView) {
+		TextView tv = (TextView) rootView.findViewById(R.id.price);
+        tv.setText(item.price);
+        tv = (TextView) rootView.findViewById(R.id.desc);
+        tv.setText(item.desc);
+        tv = (TextView) rootView.findViewById(R.id.title);
+        tv.setText(item.title);
+        
+        ImageView iv = (ImageView) rootView.findViewById(R.id.productimage);
+        ImageDownloader mDownload = new ImageDownloader();
+        mDownload.download(item.image, iv);
+	}
 
 
+	
 }
