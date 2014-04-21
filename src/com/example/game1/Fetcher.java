@@ -2,6 +2,8 @@ package com.example.game1;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 
 import javax.xml.parsers.SAXParser;
@@ -15,17 +17,22 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.xml.sax.XMLReader;
 
+import android.graphics.Paint.Join;
 import android.os.AsyncTask;
+import android.os.StrictMode;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 public class Fetcher {
-	String baseUrl = "http://api.affil.walmart.com";
-	String vohUrl = baseUrl + "/voh";
-	String vodUrl = baseUrl + "/vod";
+	
+	String baseUrl = "http://api.affil.walmart.com";	
+	String vohUrl = baseUrl;// + "/voh";
+	String vodUrl = baseUrl;// + "/vod";
 	
 	public void setItemForUI(View view, String type) {
 		RequestTask rt = new RequestTask();
@@ -80,11 +87,17 @@ public class Fetcher {
 		}
 
 	    protected String doInBackground(String... uri) {
+	    	StrictMode.ThreadPolicy policy = new StrictMode.
+	    	          ThreadPolicy.Builder().permitAll().build();
+	    	        StrictMode.setThreadPolicy(policy); 
 	    	HttpClient httpclient = new DefaultHttpClient();
 	        HttpResponse response;
 	        String responseString = null;
-	        try {
-	            response = httpclient.execute(new HttpGet(uri[0]));
+	        try {	        	
+	            HttpGet request = new HttpGet();
+	            URI website = new URI(uri[0]);
+	            request.setURI(website);
+	            response = httpclient.execute(request);
 	            StatusLine statusLine = response.getStatusLine();
 	            if(statusLine.getStatusCode() == HttpStatus.SC_OK){
 	                ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -100,19 +113,34 @@ public class Fetcher {
 	            //TODO Handle problems..
 	        } catch (IOException e) {
 	            //TODO Handle problems..
-	        }
+	        } catch (URISyntaxException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	        System.out.println(responseString);
 	        return responseString;
 	    }	    
 	    
 	    protected void onPostExecute(String response) {
-	    	Item item = getItemFromString(response);
+	    	Item item = new Item();
+	    	JSONObject jObject = null;
+	    	try {
+				jObject = new JSONObject(response);
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	    	try {
+				item.desc = jObject.getString("shortDescription");
+				item.price = Double.toString(jObject.getDouble("salePrice"));
+				item.title = jObject.getString("name");
+				item.image = jObject.getString("largeImage");				
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	    	setItem(item, view);
 	    }
-	    
-		public Item getItemFromString(String response) {
-			return null;
-		}
-	}
+	 }
 	
 }

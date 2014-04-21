@@ -18,13 +18,15 @@ public class BaseFragment extends Fragment {
 	Fetcher fetcher = new Fetcher();
 	
 	public void setItemForUI(View rootView) {
-		Item item ;
-		if (type == "vod") {
-			item = fetcher.getValueOfDay();
-		} else {
-			item = fetcher.getValueOfHour();
-		}
-	    setItem(item, rootView);
+		fetcher.setItemForUI(rootView, type);
+		// OR 
+		//		Item item ;
+		//		if (type == "vod") {
+		//			item = fetcher.getValueOfDay();
+		//		} else {
+		//			item = fetcher.getValueOfHour();
+		//		}
+		//	    setItem(item, rootView);
 	}
 	
 	@Override
@@ -62,7 +64,5 @@ public class BaseFragment extends Fragment {
         ImageDownloader mDownload = new ImageDownloader();
         mDownload.download(item.image, iv);
 	}
-
-
 	
 }

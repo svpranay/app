@@ -13,6 +13,7 @@ public class MyService extends IntentService {
     public MyService() {
        super("MyServiceName");
     }
+    
     @Override
     protected void onHandleIntent(Intent intent) {
         Log.d("MyService", "About to execute MyTask");
@@ -26,6 +27,7 @@ public class MyService extends IntentService {
                return false;
         }
     }        
+    
     private void sendNotification(Context context) {
         Intent notificationIntent = new Intent(context, MainActivity.class);
         PendingIntent contentIntent = PendingIntent.getActivity(context, 0, notificationIntent, 0);
