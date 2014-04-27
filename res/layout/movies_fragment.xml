@@ -2,16 +2,47 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent" android:layout_height="fill_parent">
 
-<LinearLayout 
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+ 	android:orientation="vertical">
+        
+ <LinearLayout
+	 android:id="@+id/progressBarLayout"
+	 android:layout_width="match_parent"
+	 android:layout_height="match_parent"
+	 android:gravity="center"		
+	 android:orientation="vertical"
+	 android:visibility="visible">
+	     
+    <TextView android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Loading...please wait"
+            android:typeface="serif"
+            android:gravity="center"
+            android:padding="5dp"/>             
+     
+    <ProgressBar
+		android:id="@+id/progressBar"
+		style="?android:attr/progressBarStyle"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"/>
+    
+</LinearLayout>
+    
+<LinearLayout 
+    android:id="@+id/mainLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:visibility="invisible">
 
    <LinearLayout android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/rounded_corner"
         android:layout_gravity="center"
         android:layout_centerInParent="true">        
+   		
    		<TextView android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="TITLE"
@@ -28,48 +59,44 @@
 	    android:gravity="center"
 	    android:textStyle="bold"
 	    android:typeface="monospace"
-	    android:text="Title: Design Movies Screen"
-	    android:textColor="#547C0E" />
+	    android:textColor="#547C0E"/>
 	 
     <ImageView
         android:id="@+id/productimage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/title"
         android:gravity="center"
         android:contentDescription="@string/banner_alt"
-        android:src="@drawable/item_300" />
+        android:src="@drawable/item_300"/>
 
    <LinearLayout android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/rounded_corner"
-        android:layout_gravity="center"
-        android:layout_centerInParent="true">        
-   		<TextView android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="PRICE"
-            android:typeface="serif"
-            android:gravity="center"
-            android:padding="5dp"/>         
+        android:layout_gravity="center">        
+   
+	   <TextView android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:text="PRICE"
+	            android:typeface="serif"
+	            android:gravity="center"
+	            android:padding="5dp"/>         
     </LinearLayout>      
 
    <TextView
        android:id="@+id/price"
        style="@dimen/activity_horizontal_margin"
        android:layout_width="fill_parent"
-       android:layout_height="wrap_content"      
-       android:layout_below="@+id/productimage"
+       android:layout_height="wrap_content"             
        android:layout_marginTop="14dp"            
-       android:gravity="center"
-       android:text="Price"
-       android:textColor="#0000CC" />
+       android:gravity="center"       
+       android:textColor="#0000CC"/>
 
    <LinearLayout android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/rounded_corner"
-        android:layout_gravity="center"
-        android:layout_centerInParent="true">        
-   		<TextView android:layout_width="fill_parent"
+        android:layout_gravity="center">        
+   	
+   	<TextView android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="DESCRIPTION"
             android:typeface="serif"
@@ -84,9 +111,8 @@
        android:layout_alignParentLeft="true"
        android:layout_below="@+id/title"
        android:layout_marginTop="29dp"            
-       android:gravity="center"
-       android:text="Description of the item can be found here. Design Movies Screen"       
-       android:textSize="20dp" />
+       android:gravity="center"             
+       android:textSize="20dp"/>
 
    <ImageButton
        android:id="@+id/buynow"
@@ -96,7 +122,8 @@
        android:layout_gravity="center"
        android:background="#ffffff"
        android:gravity="center"
-       android:src="@drawable/buy_now_blue" />
+       android:src="@drawable/buy_now_blue"/>
 
+</LinearLayout>
 </LinearLayout>
 </ScrollView>

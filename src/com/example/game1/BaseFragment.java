@@ -1,6 +1,8 @@
 package com.example.game1;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -17,8 +19,9 @@ public class BaseFragment extends Fragment {
 	public String type;
 	Fetcher fetcher = new Fetcher();
 	
-	public void setItemForUI(View rootView) {
-		fetcher.setItemForUI(rootView, type);
+	public void setItemForUI(View rootView) {		
+		SharedPreferences prefs = this.getActivity().getSharedPreferences("com.example.game1", Context.MODE_PRIVATE);
+		fetcher.setItemForUI(rootView, type, prefs);
 		// OR 
 		//		Item item ;
 		//		if (type == "vod") {

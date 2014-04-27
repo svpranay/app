@@ -6,6 +6,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -23,10 +24,20 @@ public class MyService extends IntentService {
     private class MyTask extends AsyncTask<String, Void, Boolean> {
         @Override
          protected Boolean doInBackground(String... strings) {
-                Log.d("MyService - MyTask", "Calling doInBackground within MyTask");
+               Log.d("MyService - MyTask", "Calling doInBackground within MyTask");
                return false;
         }
     }        
+    
+    private String getState() {    	
+    	SharedPreferences prefs = this.getSharedPreferences("com.example.game1", Context.MODE_PRIVATE);
+    	String vohKey = "com.example.game1.vohItemId";
+    	String vodKey = "com.example.game1.vodItemId";
+    	String vohItemId = prefs.getString(vohKey, "");
+    	String vodItemId = prefs.getString(vodKey, "");
+    	Log.d("Verify items", "Items in database " + vohItemId + " " + vodItemId);
+    	return vohItemId + ":" + vodItemId;
+    }    
     
     private void sendNotification(Context context) {
         Intent notificationIntent = new Intent(context, MainActivity.class);
@@ -34,7 +45,7 @@ public class MyService extends IntentService {
         NotificationManager notificationMgr = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         Notification notification =  new Notification(android.R.drawable.star_on, "Refresh", System.currentTimeMillis());
         notification.flags |= Notification.FLAG_AUTO_CANCEL;
-        notification.setLatestEventInfo(context, "Title","Content", contentIntent);
+        notification.setLatestEventInfo(context, getState(), "Content", contentIntent);
         notificationMgr.notify(0, notification);
      }
 }

@@ -21,22 +21,27 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.xml.sax.XMLReader;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Paint.Join;
 import android.os.AsyncTask;
 import android.os.StrictMode;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 public class Fetcher {
 	
 	String baseUrl = "http://api.affil.walmart.com";	
-	String vohUrl = baseUrl;// + "/voh";
-	String vodUrl = baseUrl;// + "/vod";
+	String vohUrl = "http://svpranay.github.io"; //baseUrl;// + "/voh";
+	String vodUrl = "http://svpranay.github.io"; //baseUrl;// + "/vod";
 	
-	public void setItemForUI(View view, String type) {
+	public void setItemForUI(View view, String type, SharedPreferences prefs) {
 		RequestTask rt = new RequestTask();
-		rt.setViewToUpdate(view);
+		rt.setViewToUpdate(view, type, prefs);
 
 		if (type == "vod") {
 			rt.execute(vodUrl);
@@ -46,6 +51,12 @@ public class Fetcher {
 	}
 	
 	private void setItem(Item item, View rootView) {
+		LinearLayout spinnerll = (LinearLayout) rootView.findViewById(R.id.progressBarLayout);
+		spinnerll.setVisibility(View.GONE);
+
+		LinearLayout mainll = (LinearLayout) rootView.findViewById(R.id.mainLayout);
+		mainll.setVisibility(View.VISIBLE);
+		
 		TextView tv = (TextView) rootView.findViewById(R.id.price);
         tv.setText(item.price);
         tv = (TextView) rootView.findViewById(R.id.desc);
@@ -58,32 +69,16 @@ public class Fetcher {
         mDownload.download(item.image, iv);
 	}
 
-	public Item getValueOfDay() {
-		Item item = new Item();
-		item.image = "http://i.walmartimages.com/i/p/00/88/59/09/46/0088590946960_Color_Black_SW_500X500.jpg";
-		item.title = "Apple iPad 2 16GB Wi-Fi ( Black or White )";
-		item.price = "134.56$";
-		item.desc = "The all-new thinner and lighter design makes the Apple iPad 2, 16GB with Wi-Fi even more comfortable to hold. It's even more powerful with the dual-core A5 chip, yet has the same 10 hours of battery life. With two cameras, you can make FaceTime video calls, record HD video, and put a twist on your snapshots in Photo Booth.";
-		item.desc = item.desc.replace(".", ".\n");
-		return item;
-	}
-	
-	public Item getValueOfHour() {
-		Item item = new Item();
-		item.image = "http://i.walmartimages.com/i/p/11/13/04/98/62/1113049862667_500X500.jpg";
-		item.title = "Premier Mounts LPTM5080 Tilt Wall Mount for 50 - 80 Displays BONUS 15' HDMI Cable, Bundle";
-		item.price = "567.21$";
-		item.desc = "The Premier Mounts Tilt Wall Mount (LPTM5080) fits most 50-to-80-inch flat-panel displays and can support up to 300 pounds. This low-profile tilt mount for 50&quot; - 80&quot; displays is designed to hold a display 2 inches from a wall. Featuring eight degrees of continuous tilt, this flat-panel tilt mount has a rigid steel construction and universal-mounting brackets. The open design of the Premier Mounts Tilt Wall Mount (LPTM5080) features cable and electrical access holes for easy use and organization in almost any space. Multiple-stud mounting points for easy mounting are provided on this flat-panel tilt wall mount, making it stable and easy to use. There is also built-in lateral shift for fine tuning to allow simple adjustments. The safety locking screws can also be used for fine tuning. This Premier Mounts Tilt Wall Mount (LPTM5080) also includes patent-pending universal spacers.";
-		item.desc = item.desc.replace(".", ".\n");
-		return item;		
-	}
-	
 	class RequestTask extends AsyncTask<String, Void, String>{
 		
 		View view;
+		String type;
+		SharedPreferences prefs;
 		
-		public void setViewToUpdate(View view) {
-			this.view = view; 
+		public void setViewToUpdate(View view, String type, SharedPreferences prefs) {
+			this.view = view;
+			this.type = type;
+			this.prefs = prefs;
 		}
 
 	    protected String doInBackground(String... uri) {
@@ -111,13 +106,16 @@ public class Fetcher {
 	            }
 	        } catch (ClientProtocolException e) {
 	            //TODO Handle problems..
+	        	e.printStackTrace();
 	        } catch (IOException e) {
 	            //TODO Handle problems..
+	        	e.printStackTrace();
 	        } catch (URISyntaxException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
-	        System.out.println(responseString);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}	        
 	        return responseString;
 	    }	    
 	    
@@ -131,6 +129,7 @@ public class Fetcher {
 				e.printStackTrace();
 			}
 	    	try {
+	    		item.id = jObject.getString("itemId");
 				item.desc = jObject.getString("shortDescription");
 				item.price = Double.toString(jObject.getDouble("salePrice"));
 				item.title = jObject.getString("name");
@@ -139,6 +138,8 @@ public class Fetcher {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+	    	Log.d("Fetcher", "Put the value in shared prefs");
+	    	this.prefs.edit().putString("com.example.game1." + this.type + "ItemId", item.id).commit();	    	
 	    	setItem(item, view);
 	    }
 	 }
